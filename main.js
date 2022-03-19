@@ -59,6 +59,7 @@ const askForSecrets = async () => {
 	let canSave = false;
 	if(!(config.has("username") && config.has("mcPassword") && config.has("updatemessage"))) {
 		canSave = true;
+			mainLCD.setText("Please setup    config");
 			accountType = ((await promisedQuestion("Account type, mojang (1) or microsoft (2) [1]: ")) === "2" ? "microsoft" : "mojang");
 			mc_username = await promisedQuestion("Email: ");
 			mc_password = await promisedQuestion("Password: ");
@@ -488,11 +489,13 @@ function userInput(cmd, DiscordOrigin, discordMsg) {
 				doing = "timedStart"
 				timedStart = setTimeout(startQueuing, timeStringtoDateTime(cmd).toMillis() - DateTime.local().toMillis());
 				activity("Starting at " + starttimestring);
+				mainLCD.setText("Starting at:    "+starttimestring);
 				msg(DiscordOrigin, discordMsg, "Timer", "Queue is starting at " + starttimestring);
 			} else if (/^play (\d|[0-1]\d|2[0-3]):[0-5]\d$/.test(cmd)) {
 				timeStringtoDateTime(cmd);
 				calcTime(cmd);
 				msg(DiscordOrigin, discordMsg, "Time calculator", "The perfect time to start the queue will be calculated, so you can play at " + starttimestring);
+				mainLCD.setText("Playing at:     "+starttimestring);
 				activity("You can play at " + starttimestring);
 			}
 			else msg(DiscordOrigin, discordMsg, "Error", "Unknown command");
