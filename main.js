@@ -538,9 +538,19 @@ function sendDiscordMsg(channel, title, content) {
 function updateLCD()
 {
 	mainLCD.clearDisplay();
-	console.log("FINTIME: " + webserver.finTime)
+	var finishTime = convertFinishTimeToString();
+
 	mainLCD.setQueue(webserver.queuePlace);
-	mainLCD.setETA(webserver.ETA)
+	mainLCD.setETA(webserver.ETA + finishTime);
+}
+
+function convertFinishTimeToString()
+{
+	var hour = String(webserver.finTime.getHours());
+	var minutes = String(webserver.finTime.getMinutes());
+
+	var fullTime = hour + ":" + minutes;
+	return fullTime;
 }
 
 function timeStringtoDateTime(time) {
