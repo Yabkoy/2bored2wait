@@ -12,7 +12,9 @@ const mcproxy = require("@rob9315/mcproxy");
 const antiafk = require("mineflayer-antiafk");
 const queueData = require("./queue.json");
 const util = require("./util");
+const LCD = require('./LCDMenager');
 const save = "./saveid";
+
 var config;
 try {
 	config = require("config");
@@ -32,6 +34,9 @@ var accountType;
 let launcherPath;
 let c = 150;
 let finishedQueue = !config.get("minecraftserver.is2b2t");
+
+let mainLCD = new LCD(0x27);
+
 let dc;
 const rl = require("readline").createInterface({
 	input: process.stdin,
@@ -249,6 +254,7 @@ function join() {
 							sendDiscordMsg(dcUser, "Queue", "The queue is almost finished. You are in Position: " + webserver.queuePlace);
 							notisend = true;
 						}
+						updateLCD();
 					}
 					lastQueuePlace = positioninqueue;
 				}
@@ -418,7 +424,10 @@ function userInput(cmd, DiscordOrigin, discordMsg) {
 							}
 						}
 					});
-					else console.log("Position: " + webserver.queuePlace + "  Estimated time until login: " + webserver.ETA);
+					else 
+					{
+						console.log("Position: " + webserver.queuePlace + "  Estimated time until login: " + webserver.ETA);
+					}
 					break;
 				case "timedStart":
 					msg(DiscordOrigin, discordMsg, "Timer", "Timer is set to " + starttimestring);
@@ -506,6 +515,13 @@ function sendDiscordMsg(channel, title, content) {
 			}
 		}
 	});
+}
+
+function updateLCD()
+{
+
+	mainLCD.setQueue(webserver.queuePlace);
+	mainLCD.setETA(webserver.ETA)
 }
 
 function timeStringtoDateTime(time) {

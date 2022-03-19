@@ -29,6 +29,7 @@
     "node-json-minify": "^3.0.0",
     "open": "^8.0.7",
     "particles.js": "^2.0.0",
+    "raspberrypi-liquid-crystal": "^1.18.0",
     "rss-parser": "^3.12.0"
   },
   "devDependencies": {
