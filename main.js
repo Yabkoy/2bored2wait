@@ -451,16 +451,13 @@ function userInput(cmd, DiscordOrigin, discordMsg) {
 					break;
 				case "timedStart":
 					msg(DiscordOrigin, discordMsg, "Timer", "Timer is set to " + starttimestring);
-					mainLCD.setText("Timer is set to" + starttimestring);
 					break;
 				case "reconnect":
 					msg(DiscordOrigin, discordMsg, "Reconnecting", "2b2t is currently offline. Trying to reconnect");
-					mainLCD.setText("Reconnecting");
 					break;
 				case "auth":
 					let authMsg = "Authentication";
 					msg(DiscordOrigin, discordMsg, authMsg, authMsg);
-					mainLCD.setTime("Authentication");
 					break;
 				case "calcTime":
 					let calcMsg =

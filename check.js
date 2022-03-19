@@ -2,6 +2,7 @@ let parser = new(require('rss-parser'))();
 const fs = require('fs');
 const boxen = require('boxen');
 const readline = require("readline");
+const LCD = require('./LCDMenager');
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -9,6 +10,7 @@ const rl = readline.createInterface({
 var pjson = require('./package.json');
 var cv1 = pjson.version;
 var cv = 'v' + cv1;
+let mainLCD = new LCD(0x27, 16, 2);
 
 try {
     config = require("config");
@@ -53,7 +55,9 @@ function check() {
     })();
 
     function start() {
-        console.log("Please wait...");
+        var waitText = "Please wait...";
+        console.log(waitText);
+        mainLCD.setText(waitText);
         rl.close();
         require('./main.js');
     }
