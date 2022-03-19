@@ -385,6 +385,12 @@ function activity(string) {
 	dc?.user?.setActivity(string);
 }
 
+function terminateProgram()
+{
+	mainLCD.setText("2B2W Terminated!");
+	return process.exit(0);
+}
+
 //the discordBot part starts here.
 
 function userInput(cmd, DiscordOrigin, discordMsg) {
@@ -401,7 +407,8 @@ function userInput(cmd, DiscordOrigin, discordMsg) {
 
 		case "exit":
 		case "quit":
-			return process.exit(0);
+			terminateProgram();
+			break;
 
 		case "update":
 			switch (doing) {
@@ -528,6 +535,7 @@ function sendDiscordMsg(channel, title, content) {
 function updateLCD()
 {
 	mainLCD.clearDisplay();
+	console.log("FINTIME: " + webserver.finTime)
 	mainLCD.setQueue(webserver.queuePlace);
 	mainLCD.setETA(webserver.ETA)
 }
