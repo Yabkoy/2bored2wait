@@ -53,10 +53,16 @@ const LCDMenager = class LCDMenager
         this.printOnDisplay('ETA: '+ETAText, 1);
     }
 
+    setETAAndQueue(QueuePlace, ETAText)
+    {
+        this.clearDisplay();
+        this.setQueue(QueuePlace);
+        this.setETA(ETAText);
+    }
+
     setText(text)
     {
-        console.log(this.colums);
-        console.log(this.rows);
+        this.clearDisplay();
 
         var maxLetters = this.colums*this.rows;
 

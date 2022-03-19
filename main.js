@@ -35,7 +35,7 @@ let launcherPath;
 let c = 150;
 let finishedQueue = !config.get("minecraftserver.is2b2t");
 
-let mainLCD = new LCD(0x27);
+let mainLCD = new LCD(0x27, 16, 2);
 
 let dc;
 const rl = require("readline").createInterface({
@@ -91,7 +91,8 @@ const askForSecrets = async () => {
 			console.warn("There was an error when trying to log in using the provided Discord bot token. If you didn't enter a token this message will go away the next time you run this program!"); //handle wrong tokens gracefully
 		});
 		dc.on('ready', () => {
-			dc.user.setActivity("Queue is stopped.");
+			var queueStoppedMessage = "Queue is stopped.";
+			dc.user.setActivity(queueStoppedMessage);
 			fs.readFile(save, "utf8", (err, id) => {
 				if(!err) dc.users.fetch(id).then(user => {
 					dcUser = user;
@@ -114,6 +115,7 @@ const askForSecrets = async () => {
 	});
 }
 	console.log("Finished setting up 2b2w. Type 'Start' to start the queue.");
+	mainLCD.setText("Wait for command");
 	cmdInput();
 	joinOnStart();
 }
@@ -280,7 +282,9 @@ function join() {
 							startAntiAntiAFK();
 							webserver.queuePlace = "FINISHED";
 							webserver.ETA = "NOW";
-							logActivity("Queue is finished");
+							var finishMessage = "Queue is finished";
+							logActivity(finishMessage);
+							mainLCD.setText(finishMessage);
 						}
 					}
 				}
@@ -389,7 +393,10 @@ function userInput(cmd, DiscordOrigin, discordMsg) {
 	switch (cmd) {
 		case "start":
 			startQueuing();
-			msg(DiscordOrigin, discordMsg, "Queue", "Queue is starting up");
+			var queueStartingMessage = "Queue is starting up";
+			msg(DiscordOrigin, discordMsg, "Queue", queueStartingMessage);
+			mainLCD.setText(queueStartingMessage);
+
 			break;
 
 		case "exit":
@@ -487,6 +494,7 @@ function userInput(cmd, DiscordOrigin, discordMsg) {
 
 function stopMsg(discordOrigin, discordMsg, stoppedThing) {
 	msg(discordOrigin, discordMsg, stoppedThing, stoppedThing + " is **stopped**");
+	mainLCD.setText(stoppedThing + "is stopped")
 	activity(stoppedThing + " is stopped.");
 }
 
@@ -519,7 +527,7 @@ function sendDiscordMsg(channel, title, content) {
 
 function updateLCD()
 {
-
+	mainLCD.clearDisplay();
 	mainLCD.setQueue(webserver.queuePlace);
 	mainLCD.setETA(webserver.ETA)
 }
