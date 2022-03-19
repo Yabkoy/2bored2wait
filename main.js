@@ -233,7 +233,10 @@ function join() {
                                             positioninqueue = headermessage.text.split("\n")[5].substring(25);
 				        }catch(e){
                                             if (e instanceof TypeError)
+											{
                                                 console.log("Reading position in queue from tab failed! Is the queue empty, or the server isn't 2b2t?");
+												mainLCD.setText("Failed to read   queue!");
+											}
                                         }
 					if(positioninqueue !== "None") positioninqueue = Number(positioninqueue);
 					webserver.queuePlace = positioninqueue; // update info on the web page
@@ -358,6 +361,7 @@ function reconnect() {
 	if (stoppedByPlayer) stoppedByPlayer = false;
 	else {
 		logActivity("Reconnecting... ");
+		mainLCD.setText("Reconnecting... ");
 		reconnectLoop();
 	}
 }
@@ -442,17 +446,21 @@ function userInput(cmd, DiscordOrigin, discordMsg) {
 					else 
 					{
 						console.log("Position: " + webserver.queuePlace + "  Estimated time until login: " + webserver.ETA);
+						updateLCD();
 					}
 					break;
 				case "timedStart":
 					msg(DiscordOrigin, discordMsg, "Timer", "Timer is set to " + starttimestring);
+					mainLCD.setText("Timer is set to" + starttimestring);
 					break;
 				case "reconnect":
 					msg(DiscordOrigin, discordMsg, "Reconnecting", "2b2t is currently offline. Trying to reconnect");
+					mainLCD.setText("Reconnecting");
 					break;
 				case "auth":
 					let authMsg = "Authentication";
 					msg(DiscordOrigin, discordMsg, authMsg, authMsg);
+					mainLCD.setTime("Authentication");
 					break;
 				case "calcTime":
 					let calcMsg =
