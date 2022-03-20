@@ -39,6 +39,16 @@ A proxy to wait out 2b2t.org's way too long queue. Includes a small webserver a 
 
 </p></details>
 
+## My LCD Modification
+
+I added support for 16x2 LCD Display for raspberry pi.
+I used raspberrypi-liquid-crystal library for display support and 
+I created my class which handle actions for 2Bored2Wait.
+
+
+![Basic usage Example](https://i.imgur.com/1moJykZ.jpg)
+
+
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
